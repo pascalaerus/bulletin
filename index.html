@@ -2,72 +2,116 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Simulateur de Bulletin - Pascal Aérus</title>
+    <title>Simulateur de Bulletin Officiel - Pascal Aérus</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <div id="auth-container" class="container">
-        <h2>Accès au Simulateur</h2>
-        <p id="id-display">Générez un identifiant pour commencer.</p>
-        <button onclick="generateID()">Créer mon ID</button>
-        <div style="margin-top:10px">
-            <input type="text" id="user-id" placeholder="Votre ID">
-            <button onclick="login()">Se Connecter</button>
+        <h2>Système de Gestion Scolaire</h2>
+        <p id="id-display">Générer vos accès pour simuler un bulletin.</p>
+        <button onclick="generateID()">Générer ID</button>
+        <div style="margin-top:15px">
+            <input type="text" id="user-id" placeholder="Entrez votre ID">
+            <button onclick="login()" class="btn-primary">Se Connecter</button>
         </div>
     </div>
 
     <div id="app-container" class="container" style="display:none;">
-        <header>
-            <h1>BULLETIN DE NOTES</h1>
-            <div class="theme-selector">
-                <button onclick="changeTheme('#2c3e50')" style="background:#2c3e50;"></button>
-                <button onclick="changeTheme('#27ae60')" style="background:#27ae60;"></button>
-                <button onclick="changeTheme('#c0392b')" style="background:#c0392b;"></button>
+        
+        <div class="no-print admin-panel">
+            <h3>Paramètres du Bulletin</h3>
+            <div class="config-grid">
+                <input type="text" id="school-name" placeholder="Nom de l'établissement">
+                <input type="text" id="school-year" placeholder="Année Scolaire (ex: 2025-2026)">
+                <div class="upload-box">
+                    <label>Logo :</label>
+                    <input type="file" id="logo-upload" accept="image/*" onchange="previewLogo(event)">
+                </div>
             </div>
-        </header>
+        </div>
 
-        <section class="info-eleve">
-            <input type="text" id="nom" placeholder="Nom de l'élève">
-            <input type="text" id="classe" placeholder="Classe">
-            <select id="periode">
-                <option value="Trimestre">Trimestre</option>
-                <option value="Semestre">Semestre</option>
-            </select>
-        </section>
+        <div id="bulletin-format" class="bulletin-paper">
+            <div class="bulletin-header">
+                <div class="header-left">
+                    <img id="logo-img" src="" style="display:none; max-height: 80px;">
+                    <h2 id="disp-school">NOM DE L'ÉTABLISSEMENT</h2>
+                </div>
+                <div class="header-right">
+                    <p>RÉPUBLIQUE DU PAYS</p>
+                    <p>Travail - Justice - Solidarité</p>
+                    <p id="disp-year">Année : 2025-2026</p>
+                </div>
+            </div>
 
-        <table>
-            <thead>
-                <tr>
-                    <th>Matière</th>
-                    <th>Coeff</th>
-                    <th>Interrogations (1, 2, 3)</th>
-                    <th>Devoirs (1, 2, 3)</th>
-                    <th>Moy. Matière</th>
-                    <th>Moy. Coeff</th>
-                </tr>
-            </thead>
-            <tbody id="subjects-body"></tbody>
-        </table>
+            <h1 class="bulletin-title">BULLETIN DE NOTES</h1>
 
-        <div class="controls">
+            <div class="student-card">
+                <div class="card-col">
+                    <p><strong>Nom & Prénom :</strong> <input type="text" id="nom" class="input-line"></p>
+                    <p><strong>Date de naissance :</strong> <input type="date" id="dob" class="input-line"></p>
+                    <p><strong>Lieu de naissance :</strong> <input type="text" id="lieu" class="input-line"></p>
+                </div>
+                <div class="card-col">
+                    <p><strong>Classe :</strong> <input type="text" id="classe" class="input-line"></p>
+                    <p><strong>Période :</strong> 
+                        <select id="type-période" onchange="togglePeriodes()">
+                            <option value="Trimestre">Trimestre</option>
+                            <option value="Semestre">Semestre</option>
+                        </select>
+                        <select id="num-période">
+                            </select>
+                    </p>
+                </div>
+            </div>
+
+            <table class="main-table">
+                <thead>
+                    <tr>
+                        <th>MATIÈRES</th>
+                        <th>COEF</th>
+                        <th colspan="3">INTERROGATIONS</th>
+                        <th colspan="3">DEVOIRS</th>
+                        <th>MOYENNE</th>
+                        <th>MOY. COEF</th>
+                    </tr>
+                </thead>
+                <tbody id="subjects-body"></tbody>
+                <tfoot>
+                    <tr class="final-row">
+                        <td colspan="8">TOTAL DES POINTS ET COEFFICIENTS</td>
+                        <td id="total-pts">0</td>
+                        <td id="total-coefs">0</td>
+                    </tr>
+                </tfoot>
+            </table>
+
+            <div class="summary-section">
+                <div class="moy-gen-box">
+                    MOYENNE GÉNÉRALE : <span id="moy-gen">0.00</span> / 20
+                </div>
+                <div class="rang-box">
+                    RANG : <input type="text" id="rang" class="input-line" style="width: 60px;">
+                </div>
+            </div>
+
+            <div class="signature-section">
+                <div class="sig">Le Parent d'élève</div>
+                <div class="sig">Le Professeur Principal</div>
+                <div class="sig">Le Chef d'Établissement</div>
+            </div>
+        </div>
+
+        <div class="no-print action-bar">
             <button onclick="addRow()">+ Ajouter Matière</button>
-            <button onclick="calculerBulletin()" class="btn-calc">Calculer le Bulletin</button>
+            <button onclick="validerEtImprimer()" class="btn-print-final">Imprimer le Bulletin</button>
         </div>
-
-        <div class="results-box">
-            <p><strong>Moyenne Générale : <span id="moy-gen">0.00</span> / 20</strong></p>
-            <p>Rang : <input type="text" id="rang" placeholder="ex: 1er"> </p>
-        </div>
-
-        <button class="print-btn" onclick="window.print()">Imprimer le Bulletin</button>
     </div>
 
-    <footer class="site-footer">
-        <p>Créé par <strong>Pascal Aérus</strong> &copy; 2026</p>
+    <footer class="no-print site-footer">
+        <p>Interface de simulation créée par <strong>Pascal Aérus</strong> &copy; 2026</p>
     </footer>
 
     <script src="script.js"></script>
 </body>
 </html>
-
