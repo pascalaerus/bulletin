@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Simulateur de Bulletin - Pascal Aérus</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="auth-container" class="container">
+        <h2>Accès au Simulateur</h2>
+        <p id="id-display">Générez un identifiant pour commencer.</p>
+        <button onclick="generateID()">Créer mon ID</button>
+        <div style="margin-top:10px">
+            <input type="text" id="user-id" placeholder="Votre ID">
+            <button onclick="login()">Se Connecter</button>
+        </div>
+    </div>
+
+    <div id="app-container" class="container" style="display:none;">
+        <header>
+            <h1>BULLETIN DE NOTES</h1>
+            <div class="theme-selector">
+                <button onclick="changeTheme('#2c3e50')" style="background:#2c3e50;"></button>
+                <button onclick="changeTheme('#27ae60')" style="background:#27ae60;"></button>
+                <button onclick="changeTheme('#c0392b')" style="background:#c0392b;"></button>
+            </div>
+        </header>
+
+        <section class="info-eleve">
+            <input type="text" id="nom" placeholder="Nom de l'élève">
+            <input type="text" id="classe" placeholder="Classe">
+            <select id="periode">
+                <option value="Trimestre">Trimestre</option>
+                <option value="Semestre">Semestre</option>
+            </select>
+        </section>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Matière</th>
+                    <th>Coeff</th>
+                    <th>Interrogations (1, 2, 3)</th>
+                    <th>Devoirs (1, 2, 3)</th>
+                    <th>Moy. Matière</th>
+                    <th>Moy. Coeff</th>
+                </tr>
+            </thead>
+            <tbody id="subjects-body"></tbody>
+        </table>
+
+        <div class="controls">
+            <button onclick="addRow()">+ Ajouter Matière</button>
+            <button onclick="calculerBulletin()" class="btn-calc">Calculer le Bulletin</button>
+        </div>
+
+        <div class="results-box">
+            <p><strong>Moyenne Générale : <span id="moy-gen">0.00</span> / 20</strong></p>
+            <p>Rang : <input type="text" id="rang" placeholder="ex: 1er"> </p>
+        </div>
+
+        <button class="print-btn" onclick="window.print()">Imprimer le Bulletin</button>
+    </div>
+
+    <footer class="site-footer">
+        <p>Créé par <strong>Pascal Aérus</strong> &copy; 2026</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
