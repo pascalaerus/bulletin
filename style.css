@@ -1,23 +1,39 @@
-:root { --primary-color: #2c3e50; }
-body { font-family: 'Segoe UI', sans-serif; background: #f4f4f9; padding: 20px; }
-.container { max-width: 900px; margin: auto; background: #fff; padding: 25px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-h1 { text-align: center; color: var(--primary-color); border-bottom: 2px solid var(--primary-color); padding-bottom: 10px; }
-.info-eleve { display: flex; gap: 10px; margin-bottom: 20px; }
-.info-eleve input, select { flex: 1; padding: 8px; border: 1px solid #ddd; }
-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-th { background: var(--primary-color); color: white; padding: 10px; font-size: 14px; }
-td { border: 1px solid #ddd; padding: 8px; text-align: center; }
-.note-inputs { display: flex; gap: 4px; justify-content: center; }
-.note-inputs input { width: 35px; text-align: center; }
-.btn-calc { background: #27ae60; color: white; border: none; padding: 10px 20px; cursor: pointer; border-radius: 5px; }
-.results-box { margin-top: 20px; padding: 15px; background: #f9f9f9; border-left: 5px solid var(--primary-color); font-size: 1.2em; }
-.site-footer { text-align: center; margin-top: 30px; border-top: 1px solid #ddd; padding: 10px; color: #777; }
-.theme-selector { text-align: center; margin-bottom: 15px; }
-.theme-selector button { width: 25px; height: 25px; border-radius: 50%; border: 2px solid #fff; cursor: pointer; margin: 0 5px; }
-.print-btn { display: block; width: 100%; margin-top: 20px; padding: 12px; background: var(--primary-color); color: white; border: none; cursor: pointer; border-radius: 5px; }
+:root { --main-blue: #1a237e; }
+body { background: #555; display: flex; flex-direction: column; align-items: center; padding: 20px; font-family: 'Times New Roman', serif; }
 
+.container { width: 100%; max-width: 900px; }
+
+/* PANEL ADMIN */
+.admin-panel { background: #fff; padding: 15px; border-radius: 8px; margin-bottom: 20px; border-left: 5px solid #27ae60; }
+.config-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; }
+
+/* LE PAPIER */
+.bulletin-paper { background: white; padding: 50px; min-height: 1100px; box-shadow: 0 0 20px rgba(0,0,0,0.5); color: #000; }
+
+.bulletin-header { display: flex; justify-content: space-between; border-bottom: 2px double #000; padding-bottom: 10px; }
+.header-right { text-align: center; font-size: 0.9em; }
+
+.bulletin-title { text-align: center; text-decoration: underline; margin: 30px 0; font-size: 2em; }
+
+.student-card { display: flex; justify-content: space-between; margin-bottom: 30px; border: 1px solid #000; padding: 15px; }
+.input-line { border: none; border-bottom: 1px dotted #000; width: 180px; font-family: inherit; font-weight: bold; }
+
+.main-table { width: 100%; border: 2px solid #000; border-collapse: collapse; }
+.main-table th, .main-table td { border: 1px solid #000; padding: 8px; text-align: center; }
+.main-table th { background: #f0f0f0; font-size: 0.8em; }
+
+.final-row { font-weight: bold; background: #eee; }
+.summary-section { margin-top: 20px; display: flex; justify-content: space-around; font-size: 1.3em; font-weight: bold; }
+
+.signature-section { margin-top: 60px; display: flex; justify-content: space-between; }
+.sig { text-align: center; width: 200px; font-size: 0.9em; border-top: 1px solid #000; padding-top: 5px; }
+
+.site-footer { color: white; margin-top: 20px; }
+
+/* GESTION IMPRESSION */
 @media print {
-    button, .theme-selector, .site-footer, .controls, #auth-container { display: none !important; }
-    input { border: none !important; background: transparent !important; }
-    .container { box-shadow: none; width: 100%; }
+    body { background: white; padding: 0; }
+    .no-print { display: none !important; }
+    .bulletin-paper { box-shadow: none; padding: 20px; width: 100%; }
+    .cell-input { border: none; }
 }
