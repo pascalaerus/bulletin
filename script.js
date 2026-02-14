@@ -1,17 +1,17 @@
 function generateID() {
     const id = "AERUS-" + Math.floor(1000 + Math.random() * 9000);
-    localStorage.setItem('bulletin_id', id);
-    document.getElementById('id-display').innerHTML = `ID : <strong style="color:red">${id}</strong>`;
+    localStorage.setItem('aerus_id', id);
+    document.getElementById('id-display').innerHTML = `Votre ID : <strong style="color:#E8112D">${id}</strong> (Notez-le)`;
 }
 
 function login() {
     const input = document.getElementById('user-id').value;
-    if(input === localStorage.getItem('bulletin_id')) {
+    if(input === localStorage.getItem('aerus_id')) {
         document.getElementById('auth-container').style.display = "none";
         document.getElementById('app-container').style.display = "block";
         updateP();
         for(let i=0; i<8; i++) addRow();
-    } else { alert("ID invalide !"); }
+    } else { alert("ID incorrect !"); }
 }
 
 function updateP() {
@@ -35,16 +35,16 @@ function addRow() {
     const tbody = document.getElementById('grades-body');
     const row = document.createElement('tr');
     row.innerHTML = `
-        <td><input type="text" class="input-line" style="width:120px"></td>
-        <td><input type="number" class="c" value="1" oninput="calc()" style="width:30px"></td>
-        <td><input type="number" class="n" oninput="calc()" style="width:30px"></td>
-        <td><input type="number" class="n" oninput="calc()" style="width:30px"></td>
-        <td><input type="number" class="n" oninput="calc()" style="width:30px"></td>
-        <td><input type="number" class="d" oninput="calc()" style="width:30px"></td>
-        <td><input type="number" class="d" oninput="calc()" style="width:30px"></td>
-        <td><input type="number" class="d" oninput="calc()" style="width:30px"></td>
-        <td class="m-mat">0.00</td>
-        <td class="m-coef">0.00</td>
+        <td><input type="text" placeholder="Matière" style="width:110px; border:none; border-bottom:1px solid #eee;"></td>
+        <td><input type="number" class="c" value="1" oninput="calc()"></td>
+        <td><input type="number" class="n" oninput="calc()"></td>
+        <td><input type="number" class="n" oninput="calc()"></td>
+        <td><input type="number" class="n" oninput="calc()"></td>
+        <td><input type="number" class="d" oninput="calc()"></td>
+        <td><input type="number" class="d" oninput="calc()"></td>
+        <td><input type="number" class="d" oninput="calc()"></td>
+        <td class="m-mat" style="font-weight:bold">0.00</td>
+        <td class="m-coef" style="font-weight:bold">0.00</td>
     `;
     tbody.appendChild(row);
 }
@@ -68,42 +68,27 @@ function calc() {
 }
 
 function printReport() {
-    // 1. On récupère les infos
     const school = document.getElementById('school-name').value;
     const name = document.getElementById('nom').value;
     const dob = document.getElementById('dob').value;
 
-    // 2. Validation stricte Pascal Aérus
     if(!school || !name || !dob) {
-        alert("🛑 Erreur : Remplissez les informations de l'élève et de l'établissement !");
+        alert("🛑 Erreur Pascal Aérus : Veuillez remplir le nom de l'école, de l'élève et sa date de naissance !");
         return;
     }
 
-    // 3. Préparation visuelle
     document.getElementById('disp-school').innerText = school.toUpperCase();
     document.getElementById('disp-year').innerText = "Année : " + document.getElementById('school-year').value;
 
-    // 4. Cible du PDF
+    // GENERATION PDF POUR APPLICATION ET NAVIGATEUR
     const element = document.getElementById('bulletin-paper');
-
-    // 5. Options pour un rendu parfait sur navigateur et application
     const opt = {
-        margin:       [0, 0, 0, 0], // Marges à zéro car gérées par le CSS
-        filename:     'Bulletin_' + name.replace(/\s+/g, '_') + '.pdf',
-        image:        { type: 'jpeg', quality: 1 },
-        html2canvas:  { 
-            scale: 3, // Augmente la qualité (résolution)
-            useCORS: true, 
-            letterRendering: true 
-        },
-        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        margin: 0,
+        filename: 'Bulletin_' + name + '.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2, useCORS: true },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
     };
 
-    // 6. Exécution
     html2pdf().set(opt).from(element).save();
-}
-
-    document.getElementById('disp-school').innerText = school.toUpperCase();
-    document.getElementById('disp-year').innerText = "Année : " + document.getElementById('school-year').value;
-    window.print();
 }
