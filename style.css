@@ -41,6 +41,20 @@ body { background: #455a64; margin: 0; padding: 10px; font-family: 'Times New Ro
 .auth-card { background: white; max-width: 400px; margin: 100px auto; padding: 30px; border-radius: 8px; text-align: center; }
 .admin-panel { background: white; max-width: 210mm; margin: 10px auto; padding: 15px; border-radius: 5px; }
 .btn-print { background: var(--green); color: white; border: none; padding: 10px 20px; cursor: pointer; }
+.auth-card a {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 15px;
+    border: 1px solid #008751;
+    border-radius: 20px;
+    transition: all 0.3s;
+}
+
+.auth-card a:hover {
+    background: #008751;
+    color: white !important;
+}
+
 
 @media print {
     body { background: white; padding: 0; }
