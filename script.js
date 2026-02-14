@@ -68,13 +68,41 @@ function calc() {
 }
 
 function printReport() {
+    // 1. On récupère les infos
     const school = document.getElementById('school-name').value;
     const name = document.getElementById('nom').value;
     const dob = document.getElementById('dob').value;
+
+    // 2. Validation stricte Pascal Aérus
     if(!school || !name || !dob) {
-        alert("🛑 Erreur : Remplissez le nom de l'école, de l'élève et sa date de naissance !");
+        alert("🛑 Erreur : Remplissez les informations de l'élève et de l'établissement !");
         return;
     }
+
+    // 3. Préparation visuelle
+    document.getElementById('disp-school').innerText = school.toUpperCase();
+    document.getElementById('disp-year').innerText = "Année : " + document.getElementById('school-year').value;
+
+    // 4. Cible du PDF
+    const element = document.getElementById('bulletin-paper');
+
+    // 5. Options pour un rendu parfait sur navigateur et application
+    const opt = {
+        margin:       [0, 0, 0, 0], // Marges à zéro car gérées par le CSS
+        filename:     'Bulletin_' + name.replace(/\s+/g, '_') + '.pdf',
+        image:        { type: 'jpeg', quality: 1 },
+        html2canvas:  { 
+            scale: 3, // Augmente la qualité (résolution)
+            useCORS: true, 
+            letterRendering: true 
+        },
+        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    };
+
+    // 6. Exécution
+    html2pdf().set(opt).from(element).save();
+}
+
     document.getElementById('disp-school').innerText = school.toUpperCase();
     document.getElementById('disp-year').innerText = "Année : " + document.getElementById('school-year').value;
     window.print();
