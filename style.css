@@ -1,39 +1,48 @@
-:root { --main-blue: #1a237e; }
-body { background: #555; display: flex; flex-direction: column; align-items: center; padding: 20px; font-family: 'Times New Roman', serif; }
+:root { --green: #008751; --yellow: #FCD116; --red: #E8112D; }
 
-.container { width: 100%; max-width: 900px; }
+body { background: #455a64; margin: 0; padding: 10px; font-family: 'Times New Roman', serif; }
 
-/* PANEL ADMIN */
-.admin-panel { background: #fff; padding: 15px; border-radius: 8px; margin-bottom: 20px; border-left: 5px solid #27ae60; }
-.config-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; }
+.no-print { display: block; }
+@media print { .no-print { display: none !important; } }
 
-/* LE PAPIER */
-.bulletin-paper { background: white; padding: 50px; min-height: 1100px; box-shadow: 0 0 20px rgba(0,0,0,0.5); color: #000; }
+/* A4 FORMAT */
+.bulletin-paper {
+    background: white;
+    width: 210mm;
+    height: 297mm;
+    margin: 10px auto;
+    padding: 15mm;
+    box-sizing: border-box;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
 
-.bulletin-header { display: flex; justify-content: space-between; border-bottom: 2px double #000; padding-bottom: 10px; }
-.header-right { text-align: center; font-size: 0.9em; }
+.header-benin { display: flex; justify-content: space-between; border-bottom: 2px solid #000; padding-bottom: 5px; }
+.right-side { text-align: center; }
+.pays { font-weight: bold; margin: 0; }
+.devise { font-size: 11px; font-style: italic; margin: 2px 0; }
+.benin-flag { height: 5px; width: 80px; background: linear-gradient(to right, var(--green) 40%, var(--yellow) 40%, var(--yellow) 70%, var(--red) 70%); margin: auto; }
 
-.bulletin-title { text-align: center; text-decoration: underline; margin: 30px 0; font-size: 2em; }
+.bulletin-title { text-align: center; border: 2px solid #000; width: fit-content; margin: 20px auto; padding: 5px 20px; font-size: 20px; }
 
-.student-card { display: flex; justify-content: space-between; margin-bottom: 30px; border: 1px solid #000; padding: 15px; }
-.input-line { border: none; border-bottom: 1px dotted #000; width: 180px; font-family: inherit; font-weight: bold; }
+.student-info { margin: 20px 0; font-size: 14px; line-height: 1.8; }
+.input-line { border: none; border-bottom: 1px dotted #000; font-weight: bold; width: 200px; outline: none; }
+.input-line-short { border: none; border-bottom: 1px solid #000; width: 50px; text-align: center; }
 
-.main-table { width: 100%; border: 2px solid #000; border-collapse: collapse; }
-.main-table th, .main-table td { border: 1px solid #000; padding: 8px; text-align: center; }
-.main-table th { background: #f0f0f0; font-size: 0.8em; }
+.grades-table { width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 10px; }
+.grades-table th, .grades-table td { border: 1px solid #000; padding: 4px; text-align: center; }
+.grades-table th { background: #f0f0f0; }
 
-.final-row { font-weight: bold; background: #eee; }
-.summary-section { margin-top: 20px; display: flex; justify-content: space-around; font-size: 1.3em; font-weight: bold; }
+.result-box { margin-top: 20px; border: 2px solid #000; padding: 10px; font-weight: bold; font-size: 16px; }
 
-.signature-section { margin-top: 60px; display: flex; justify-content: space-between; }
-.sig { text-align: center; width: 200px; font-size: 0.9em; border-top: 1px solid #000; padding-top: 5px; }
+.signature-section { display: flex; justify-content: space-between; margin-top: 50px; font-size: 12px; }
+.sig { width: 150px; border-top: 1px solid #000; text-align: center; padding-top: 5px; }
 
-.site-footer { color: white; margin-top: 20px; }
+/* AUTH & UI */
+.auth-card { background: white; max-width: 400px; margin: 100px auto; padding: 30px; border-radius: 8px; text-align: center; }
+.admin-panel { background: white; max-width: 210mm; margin: 10px auto; padding: 15px; border-radius: 5px; }
+.btn-print { background: var(--green); color: white; border: none; padding: 10px 20px; cursor: pointer; }
 
-/* GESTION IMPRESSION */
 @media print {
     body { background: white; padding: 0; }
-    .no-print { display: none !important; }
-    .bulletin-paper { box-shadow: none; padding: 20px; width: 100%; }
-    .cell-input { border: none; }
+    .bulletin-paper { box-shadow: none; margin: 0; border: none; }
 }
