@@ -67,18 +67,16 @@ function addRow() {
 function calc() {
     let tPoints = 0, tCoefs = 0;
     document.querySelectorAll('#grades-body tr').forEach(tr => {
-        // On récupère toutes les notes saisies sur la ligne
         const notesSaisies = Array.from(tr.querySelectorAll('.n, .d'))
                                   .map(i => parseFloat(i.value))
                                   .filter(v => !isNaN(v));
 
         const c = parseFloat(tr.querySelector('.c').value) || 0;
         
-        // CORRECTION : Si aucune note n'est saisie, on n'ajoute pas le coefficient au total
         if (notesSaisies.length === 0) {
             tr.querySelector('.m-mat').innerText = "0.00";
             tr.querySelector('.m-coef').innerText = "0.00";
-            return; // On passe à la ligne suivante
+            return; 
         }
 
         const getM = (sel) => {
@@ -91,11 +89,20 @@ function calc() {
         tr.querySelector('.m-coef').innerText = (m * c).toFixed(2);
         
         tPoints += (m * c); 
-        tCoefs += c; // Le coefficient n'est ajouté que si la ligne contient des notes
+        tCoefs += c; 
     });
-    document.getElementById('total-points').innerText = tPoints.toFixed(2);
-    document.getElementById('total-coefs').innerText = tCoefs;
-    document.getElementById('moy-gen').innerText = tCoefs ? (tPoints/tCoefs).toFixed(2) : "0.00";
+
+    const moyenneGénérale = tCoefs ? (tPoints / tCoefs).toFixed(2) : "0.00";
+
+    // CORRECTION DES TOTAUX GÉNÉRAUX
+    // Affiche la moyenne générale (ex: 8.58) sous la colonne MOY. /20
+    document.getElementById('total-points').innerText = moyenneGénérale;
+    
+    // Affiche le total des points coefficiés (ex: 128.75) sous la colonne MOY. COEF
+    document.getElementById('total-coefs').innerText = tPoints.toFixed(2);
+    
+    // Mise à jour du cadre de résultat en bas
+    document.getElementById('moy-gen').innerText = moyenneGénérale;
 }
 
 function printReport() {
