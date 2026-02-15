@@ -67,15 +67,31 @@ function addRow() {
 function calc() {
     let tPoints = 0, tCoefs = 0;
     document.querySelectorAll('#grades-body tr').forEach(tr => {
+        // On récupère toutes les notes saisies sur la ligne
+        const notesSaisies = Array.from(tr.querySelectorAll('.n, .d'))
+                                  .map(i => parseFloat(i.value))
+                                  .filter(v => !isNaN(v));
+
         const c = parseFloat(tr.querySelector('.c').value) || 0;
+        
+        // CORRECTION : Si aucune note n'est saisie, on n'ajoute pas le coefficient au total
+        if (notesSaisies.length === 0) {
+            tr.querySelector('.m-mat').innerText = "0.00";
+            tr.querySelector('.m-coef').innerText = "0.00";
+            return; // On passe à la ligne suivante
+        }
+
         const getM = (sel) => {
             const vals = Array.from(tr.querySelectorAll(sel)).map(i=>parseFloat(i.value)).filter(v=>!isNaN(v));
             return vals.length ? vals.reduce((a,b)=>a+b)/vals.length : 0;
         };
+
         const m = (getM('.n') + getM('.d')) / 2;
         tr.querySelector('.m-mat').innerText = m.toFixed(2);
         tr.querySelector('.m-coef').innerText = (m * c).toFixed(2);
-        tPoints += (m * c); tCoefs += c;
+        
+        tPoints += (m * c); 
+        tCoefs += c; // Le coefficient n'est ajouté que si la ligne contient des notes
     });
     document.getElementById('total-points').innerText = tPoints.toFixed(2);
     document.getElementById('total-coefs').innerText = tCoefs;
