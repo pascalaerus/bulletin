@@ -35,13 +35,15 @@
         <div class="admin-panel no-print">
             <h3>Configuration de l'Établissement</h3>
             <div class="config-grid">
-                <input type="text" id="school-name" placeholder="Nom de l'école (ex: Collège Père Aupiais)">
+                <input type="text" id="school-name" placeholder="Nom de l'école (ex: Collège Père Aupiais)" oninput="updateWatermark()">
                 <input type="text" id="school-year" placeholder="Année Scolaire (ex: 2025-2026)">
                 <input type="file" id="logo-upload" accept="image/*" onchange="previewLogo(event)">
             </div>
         </div>
 
         <div class="bulletin-paper">
+            <div id="watermark-overlay"></div>
+
             <div class="header-benin">
                 <div class="left-side">
                     <img id="logo-img" src="" style="display:none; max-height: 80px;">
@@ -127,4 +129,3 @@
     <script src="script.js"></script>
 </body>
 </html>
-
