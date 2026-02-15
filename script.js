@@ -10,8 +10,23 @@ function login() {
         document.getElementById('auth-container').style.display = "none";
         document.getElementById('app-container').style.display = "block";
         updateP();
+        updateWatermark(); // Ajout du filigrane à la connexion
         for(let i=0; i<8; i++) addRow();
     } else { alert("ID invalide !"); }
+}
+
+// Nouvelle fonction Watermark ajoutée au script
+function updateWatermark() {
+    const name = document.getElementById('school-name').value || "ÉTABLISSEMENT";
+    const overlay = document.getElementById('watermark-overlay');
+    if(!overlay) return;
+    overlay.innerHTML = "";
+    for (let i = 0; i < 100; i++) {
+        const span = document.createElement('span');
+        span.className = 'watermark-item';
+        span.innerText = name;
+        overlay.appendChild(span);
+    }
 }
 
 function updateP() {
